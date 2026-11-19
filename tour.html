@@ -84,13 +84,6 @@
     h2 { font-size: 30px; line-height: 1.1; }
     h2 + p.sub { color: var(--muted); font-size: 14px; margin: 4px 0 18px; }
 
-    /* 예시 표시 */
-    .ex {
-      display: inline-block; font-size: 11px; font-weight: 700;
-      color: var(--rose); background: var(--pink);
-      border: 1px solid var(--rose); border-radius: 6px;
-      padding: 0 6px; margin-left: 4px; vertical-align: middle; white-space: nowrap;
-    }
     .notice {
       background: var(--matcha-mist); border-radius: 10px;
       padding: 10px 14px; font-size: 13px; color: var(--muted); margin-bottom: 28px;
@@ -148,6 +141,8 @@
     .cost { width: 100%; border-collapse: collapse; font-size: 15px; }
     .cost td { padding: 10px 0; border-bottom: 1px dashed #C9CEC1; }
     .cost td:last-child { text-align: right; font-weight: 700; white-space: nowrap; padding-left: 12px; }
+    .cost td .detail { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .cost td:last-child { vertical-align: top; }
     .cost tr.total td { border-bottom: none; border-top: 1.5px solid var(--ink); font-size: 17px; padding-top: 14px; }
     .cost tr.total td:last-child { color: var(--rose); }
 
@@ -193,7 +188,7 @@
     <!-- 안내 문구 -->
     <p class="notice">
       ※ 촬영지 정보는 서울시 미디어허브 등 기사와 관광 안내 자료를 바탕으로 정리했어요.
-      시간과 가격은 실제 정보가 아니라서 <span class="ex">예시(Example)</span> 표시를 붙였어요.
+      메뉴 가격과 영업시간은 가게 사정에 따라 바뀔 수 있으니 방문 전에 확인해 주세요.
       주택가 골목은 주민이 사는 곳이니 조용히 걸어 주세요.
     </p>
 
@@ -210,7 +205,7 @@
             <h3>세운상가 · 을지로 일대</h3>
             <div class="works"><span class="work">영화 〈도둑들〉</span><span class="work">드라마 〈빈센조〉</span></div>
             <p class="desc">〈도둑들〉의 추격 장면이 촬영된 곳으로 소개되고, 〈빈센조〉에서는 '금가프라자'로 나왔어요. 오래된 상가 건물과 골목이 이어지는 레트로 분위기예요.</p>
-            <p class="when">추천 시간대 <b>늦은 오후 ~ 저녁</b> <span class="ex">예시(Example)</span></p>
+            <p class="when">추천 시간대 <b>늦은 오후 ~ 저녁</b></p>
             <a class="btn" href="https://map.naver.com/p/search/세운상가" target="_blank" rel="noopener">View on Map (지도 보기) ↗</a>
           </div>
 
@@ -219,7 +214,7 @@
             <h3>북촌 · 서촌 골목</h3>
             <div class="works"><span class="work">영화 〈건축학개론〉</span><span class="work">드라마 〈겨울연가〉</span></div>
             <p class="desc">서촌 누하동 일대는 〈건축학개론〉의 한옥 장면 배경으로 알려져 있고, 북촌 골목은 〈겨울연가〉 촬영지로 알려져 있어요. 한옥 사이로 걷는 첫사랑 같은 분위기예요.</p>
-            <p class="when">추천 시간대 <b>오후 (한낮)</b> <span class="ex">예시(Example)</span></p>
+            <p class="when">추천 시간대 <b>오후 (한낮)</b></p>
             <a class="btn" href="https://map.naver.com/p/search/서촌 누하동" target="_blank" rel="noopener">View on Map (지도 보기) ↗</a>
           </div>
 
@@ -228,7 +223,7 @@
             <h3>한강 노들섬</h3>
             <div class="works"><span class="work">드라마 〈빈센조〉</span></div>
             <p class="desc">관광 안내 자료에서 〈빈센조〉 촬영지로 소개된 한강 위의 섬이에요. 강과 도시 불빛을 함께 볼 수 있어, 엔딩 크레딧처럼 하루를 마무리하기 좋아요.</p>
-            <p class="when">추천 시간대 <b>해 질 무렵 ~ 밤</b> <span class="ex">예시(Example)</span></p>
+            <p class="when">추천 시간대 <b>해 질 무렵 ~ 밤</b></p>
             <a class="btn" href="https://map.naver.com/p/search/노들섬" target="_blank" rel="noopener">View on Map (지도 보기) ↗</a>
           </div>
 
@@ -241,32 +236,30 @@
       <div class="ticket-head"><span>HALF-DAY WALK</span><span class="heart">♥</span></div>
       <div class="ticket-body">
         <h2 class="serif">Route</h2>
-        <p class="sub">반나절 도보 일정표 <span class="ex">시간은 예시(Example)</span></p>
+        <p class="sub">반나절 도보 일정표</p>
         <ul class="schedule">
-          <li><span class="time">13:00</span>Movie Matcha에서 오늘의 영화 고르고, 촬영지 작품 미리 떠올리기</li>
-          <li><span class="time">14:00</span>서촌 골목 산책 → 북촌 한옥 골목 걷기</li>
-          <li><span class="time">16:00</span>대중교통으로 을지로 이동, 카페에서 잠깐 쉬기</li>
-          <li><span class="time">17:00</span>세운상가 · 을지로 골목 걷기</li>
-          <li><span class="time">18:30</span>을지로에서 저녁 식사</li>
-          <li><span class="time">19:30</span>대중교통으로 노들섬 이동, 한강 야경 보며 마무리</li>
+          <li><span class="time">14:00</span>서촌·통인동 골목 산책 (경복궁역 2번 출구 출발)</li>
+          <li><span class="time">15:30</span>카페 휴식: '스태픽스(Staff Picks)' (서촌 사직동 감성 카페, 디저트 및 아메리카노 휴식)</li>
+          <li><span class="time">17:00</span>한강 노들섬 이동 및 노을 감상 (경복궁역→용산역·노들역 대중교통 이동)</li>
+          <li><span class="time">19:00</span>을지로 이동 및 저녁 식사: '만선호프 을지로 본점' (을지로3가 노가리 골목 대표 식당, 마늘치킨·노가리·생맥주 또는 음료)</li>
+          <li><span class="time">20:30</span>세운상가·을지로 골목 야경 산책 후 마무리</li>
         </ul>
-        <p class="tip">Tip. 각 동네 안에서는 걸어서, 동네와 동네 사이는 지하철·버스로 이동하는 코스예요. 실제 이동 시간은 지도 앱에서 확인해 주세요.</p>
+        <p class="tip">Tip. 각 동네 안에서는 걸어서, 동네와 동네 사이는 지하철로 이동하는 코스예요.</p>
       </div>
     </section>
 
     <!-- 4-2. 예상 비용 -->
     <section class="ticket">
-      <div class="ticket-head"><span>PRICE · FOR TWO</span><span class="heart">♥</span></div>
+      <div class="ticket-head"><span>PRICE · PER PERSON</span><span class="heart">♥</span></div>
       <div class="ticket-body">
         <h2 class="serif">Price</h2>
-        <p class="sub">2인 기준 예상 비용 <span class="ex">가격은 예시(Example)</span></p>
+        <p class="sub">1인 기준 실제 예상 금액</p>
         <table class="cost">
-          <tr><td>대중교통 (2인, 몇 구간)</td><td>약 10,000원</td></tr>
-          <tr><td>카페 (2인)</td><td>약 15,000원</td></tr>
-          <tr><td>저녁 식사 (2인)</td><td>약 40,000원</td></tr>
-          <tr class="total"><td>합계 <span class="ex">예시(Example)</span></td><td>약 65,000원</td></tr>
+          <tr><td>대중교통비<span class="detail">수도권 지하철 기본요금 1,550원 × 2회 (서촌→노들섬, 노들섬→을지로3가)</span></td><td>3,100원</td></tr>
+          <tr><td>서촌 카페 '스태픽스'<span class="detail">아메리카노 5,500원 + 디저트(파운드케이크/스콘) 6,500원</span></td><td>12,000원</td></tr>
+          <tr><td>을지로 저녁 '만선호프'<span class="detail">2인 기준 마늘치킨 21,000원 + 노가리·음료 9,000원 = 30,000원의 1인 분담금</span></td><td>15,000원</td></tr>
+          <tr class="total"><td>1인 합계</td><td>30,100원</td></tr>
         </table>
-        <p class="tip">혼자 걷는다면 대략 절반 정도로 생각하면 돼요.</p>
       </div>
     </section>
 
