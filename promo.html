@@ -4,251 +4,343 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Movie Matcha 홍보 영상</title>
-  <!-- 한글이 깨지지 않도록 한글 폰트(Noto Sans KR)를 불러옵니다 -->
+  <!-- 영문 세리프(로고) + 한글 폰트를 지정해서 글자가 깨지지 않게 해요 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Playfair+Display:wght@600;700&family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
-    /* index.html(Movie Matcha)에서 가져온 색 */
+    /* 메인 페이지(Movie Matcha)에서 가져온 색 */
     :root {
-      --bg: #12150f;          /* 아주 어두운 올리브 (배경) */
-      --matcha: #8FB36E;      /* 말차 초록 (밝게) */
-      --matcha-deep: #6a984e;
-      --strawberry: #E58FA5;  /* 스트로베리 핑크 */
-      --berry: #B8475F;       /* 진한 스트로베리 */
-      --cream: #FFFBF5;       /* 크림색 글자 */
+      --ink: #37402F;          /* 진한 올리브: 글자·테두리 (대비용) */
+      --matcha: #6a984e;       /* 말차 그린 */
+      --matcha-lime: #a6c857;  /* 밝은 말차 */
+      --matcha-shadow: #A9C78A;/* 티켓 그림자 */
+      --berry: #B8475F;        /* 베리 포인트 */
+      --strawberry: #E58FA5;   /* 스트로베리 */
+      --pink: #F6D2DC;         /* 딸기 핑크 줄무늬 */
+      --milk: #FBE6EC;         /* 밀크 줄무늬 */
+      --cream: #FFFBF5;        /* 티켓 종이 */
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; }
     body {
-      background: #000;
-      color: var(--cream);
+      background: #E9C3CE;
+      color: var(--ink);
       font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
       overflow: hidden;
       display: flex; align-items: center; justify-content: center;
     }
 
-    /* 16:9 화면: 창 크기에 맞춰 최대한 크게 */
+    /* 16:9 화면 */
     .stage {
       position: relative;
       width: min(100vw, calc(100vh * 16 / 9));
       aspect-ratio: 16 / 9;
-      background:
-        radial-gradient(ellipse at 20% 30%, rgba(106,152,78,.18), transparent 55%),
-        radial-gradient(ellipse at 80% 75%, rgba(184,71,95,.18), transparent 55%),
-        var(--bg);
+      background: repeating-linear-gradient(135deg, var(--pink) 0 1.6cqw, var(--milk) 1.6cqw 3.2cqw);
       overflow: hidden;
-      container-type: size;   /* 아래 cqw 단위 = 화면 너비의 1% */
+      container-type: size;   /* cqw = 화면 너비의 1%, cqh = 높이의 1% */
     }
+    /* 떠다니는 땡땡이 (메인 페이지의 점 장식) */
+    .dot { position: absolute; border-radius: 50%; opacity: .75; }
 
-    /* 각 장면은 화면 한가운데에 겹쳐 있고, 처음에는 숨겨져 있어요 */
+    /* 크림색 티켓 카드 */
+    .ticket {
+      position: absolute; left: 50%; top: 50%;
+      width: 64cqw; height: 80cqh;
+      margin-left: -32cqw; margin-top: -40cqh;
+      background: var(--cream);
+      border: .25cqw solid var(--ink);
+      border-radius: 1.6cqw;
+      box-shadow: 1.3cqw 1.3cqw 0 var(--matcha-shadow);
+      opacity: 0;
+    }
+    .t-head {
+      position: absolute; left: 0; right: 0; top: 0; height: 11cqh;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3cqw; border-bottom: .25cqw solid var(--ink);
+      font-weight: 900; font-size: 1.5cqw; letter-spacing: .3em;
+    }
+    .t-head .heart { color: var(--berry); font-size: 1.8cqw; letter-spacing: 0; }
+    /* 티켓 양옆 반달 홈 + 절취선 */
+    .notch {
+      position: absolute; top: 62%; width: 2.6cqw; height: 2.6cqw; margin-top: -1.3cqw;
+      border-radius: 50%; background: var(--milk); border: .25cqw solid var(--ink);
+    }
+    .notch.l { left: -1.45cqw; } .notch.r { right: -1.45cqw; }
+    .tear { position: absolute; left: 2cqw; right: 2cqw; top: 62%; border-top: .2cqw dashed var(--ink); opacity: .55; }
+    .t-body { position: absolute; left: 0; right: 0; top: 11cqh; bottom: 0; }
+
+    /* 카드 안 장면들 (겹쳐 두고 하나씩 보여 줌) */
     .scene {
       position: absolute; inset: 0;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center; opacity: 0;
     }
+    .scene.on-cream { background: var(--cream); border-radius: 0 0 1.4cqw 1.4cqw; } /* 절취선 가리기 */
 
-    /* 장면 1: 사이트 제목 */
-    .title {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 17cqw; line-height: .9; letter-spacing: -.02em; white-space: nowrap;
+    /* 로고 */
+    .wordmark { font-family: 'DM Serif Display', Georgia, serif; color: var(--ink); line-height: .9; }
+    .wordmark .ln { display: block; white-space: nowrap; }
+    .tagline {
+      display: flex; align-items: center; gap: 1.4cqw; white-space: nowrap;
+      font-family: 'Playfair Display', Georgia, serif; font-weight: 700;
+      letter-spacing: .28em; color: var(--ink);
     }
-    .title .m1 { color: var(--matcha); }
-    .title .m2 { color: var(--strawberry); font-style: italic; }
-    .flash { position: absolute; inset: 0; background: var(--cream); opacity: 0; pointer-events: none; }
+    .tagline::before, .tagline::after { content: ""; width: 3.5cqw; height: .2cqw; background: var(--ink); opacity: .6; }
+    .tagline .plus { color: var(--berry); }
 
-    /* 장면 2: 핵심 특징 */
-    .kicker {
-      font-weight: 900; font-size: 1.6cqw; letter-spacing: .5em; color: var(--matcha);
-      margin-bottom: 2cqw;
-    }
+    #s1 .cups { width: 17cqw; }
+    #s1 .wordmark { font-size: 9.6cqw; margin-top: .6cqw; }
+    #s1 .tagline { font-size: 1.5cqw; margin-top: 2.6cqw; }
+
+    /* 장면 2: 핵심 문구 */
     .feature {
       position: absolute; inset: 0;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      opacity: 0;
+      opacity: 0; padding: 0 3cqw;
     }
-    .feature .no { font-family: 'Instrument Serif', serif; font-size: 5cqw; color: var(--strawberry); line-height: 1; }
-    .feature .big { font-weight: 900; font-size: 7.5cqw; line-height: 1.2; letter-spacing: -.03em; }
+    .feature .no {
+      font-family: 'DM Serif Display', serif; font-size: 2.2cqw; color: var(--cream);
+      background: var(--berry); border-radius: 99cqw; padding: .1cqw 1.4cqw; margin-bottom: 1.8cqw;
+    }
+    .feature .big { font-weight: 900; font-size: 6.2cqw; line-height: 1.2; letter-spacing: -.03em; color: var(--ink); }
+    .feature .big.en { font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: .04em; font-size: 6.4cqw; }
     .feature .big b { color: var(--matcha); }
-    .feature .big i { color: var(--strawberry); font-style: normal; }
-    .recap { gap: 1.2cqw; }
-    .recap .line { font-weight: 900; font-size: 4.2cqw; letter-spacing: -.02em; }
-    .recap .line:nth-child(2) { color: var(--matcha); }
-    .recap .line:nth-child(3) { color: var(--strawberry); }
+    .feature .big i { color: var(--berry); font-style: normal; }
+    .feature .sub { margin-top: 2cqw; font-weight: 700; font-size: 1.8cqw; color: var(--ink); opacity: .8; }
+    .recap { gap: 1.6cqw; }
+    .recap .line { font-weight: 900; font-size: 3.6cqw; letter-spacing: -.02em; padding: .3cqw 2cqw; border-radius: 99cqw; }
+    .recap .line:nth-child(1) { font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: .08em; color: var(--ink); }
+    .recap .line:nth-child(2) { background: var(--matcha); color: var(--cream); }
+    .recap .line:nth-child(3) { background: var(--berry); color: var(--cream); }
 
     /* 장면 3: 카운트업 */
-    .label { font-weight: 700; font-size: 3cqw; color: var(--cream); }
+    .count-row { display: flex; align-items: baseline; gap: 1.5cqw; }
     .count {
-      font-weight: 900; font-size: 22cqw; line-height: 1; letter-spacing: -.04em;
-      color: var(--strawberry); font-variant-numeric: tabular-nums;
+      font-family: 'DM Serif Display', serif; font-size: 15cqw; line-height: .95;
+      color: var(--matcha); font-variant-numeric: tabular-nums;
     }
-    .count small { font-size: .45em; color: var(--matcha); }
-    .bar { width: 50cqw; height: 1.2cqw; border-radius: 1cqw; background: rgba(255,251,245,.12); overflow: hidden; margin-top: 1cqw; }
-    .bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--matcha), var(--strawberry)); }
-    .formula { margin-top: 2.2cqw; font-weight: 900; font-size: 1.8cqw; letter-spacing: .3em; }
-    .formula .a { color: var(--matcha); } .formula .b { color: var(--strawberry); }
-    .note { position: absolute; bottom: 3cqw; font-size: 1.1cqw; color: rgba(255,251,245,.4); }
+    .count small { font-size: .5em; color: var(--berry); }
+    .match {
+      font-family: 'Playfair Display', serif; font-weight: 700; font-size: 4.6cqw; letter-spacing: .06em;
+      color: var(--cream); background: var(--ink); padding: 0 1.6cqw; border-radius: 1cqw; line-height: 1.25;
+    }
+    .film { width: 50cqw; height: 3.4cqw; margin-top: 2.4cqw; }
+    #s3 .label { font-weight: 900; font-size: 2.2cqw; letter-spacing: .1em; margin-bottom: 1cqw; }
 
-    /* 장면 4: 마지막 문구 */
-    .cta { font-weight: 900; font-size: 7.6cqw; line-height: 1.15; letter-spacing: -.03em; }
-    .cta b { color: var(--matcha); }
-    .cta i { color: var(--strawberry); font-style: normal; }
+    /* 장면 4: 마지막 */
+    .now { font-weight: 900; font-size: 4.6cqw; letter-spacing: -.02em; color: var(--ink); }
+    .start-btn {
+      margin-top: 1.6cqw;
+      display: flex; flex-direction: column; align-items: center;
+      background: var(--matcha); color: var(--cream);
+      border: .25cqw solid var(--ink); border-radius: 1.4cqw;
+      padding: 1.2cqw 7cqw 1.4cqw;
+      box-shadow: .7cqw .7cqw 0 var(--ink);
+    }
+    .start-btn small { font-weight: 900; font-size: 1.2cqw; letter-spacing: .3em; }
+    .start-btn span { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 6.2cqw; letter-spacing: .16em; line-height: 1.05; }
     .url {
-      margin-top: 3cqw; font-weight: 700; font-size: 2.6cqw; color: var(--bg);
-      background: var(--cream); padding: .6cqw 2cqw; border-radius: 99cqw;
+      margin-top: 2.6cqw; font-weight: 700; font-size: 2.1cqw; color: var(--ink);
+      border-bottom: .3cqw solid var(--berry); padding-bottom: .2cqw;
       font-family: ui-monospace, Menlo, Consolas, 'Noto Sans KR', monospace;
     }
-    .brand { margin-top: 2cqw; font-family: 'Instrument Serif', serif; font-size: 2.4cqw; color: var(--matcha); }
-    .brand span { color: var(--strawberry); font-style: italic; }
+    #s4 .tagline { font-size: 1.2cqw; margin-top: 2cqw; }
 
-    /* 아래쪽 진행 막대 (15초 동안 차오름) */
-    .progress { position: absolute; left: 0; bottom: 0; height: .5cqw; width: 0; background: linear-gradient(90deg, var(--matcha), var(--strawberry)); }
+    .flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+    .progress { position: absolute; left: 0; bottom: 0; height: .6cqw; width: 0; background: linear-gradient(90deg, var(--matcha-lime), var(--matcha), var(--berry)); }
 
     /* 오른쪽 아래 다시보기 버튼 */
     .replay {
-      position: fixed; right: 20px; bottom: 20px; z-index: 10;
-      font: 700 15px 'Noto Sans KR', sans-serif;
-      color: var(--bg); background: var(--matcha);
-      border: 2px solid var(--cream); border-radius: 999px;
-      padding: 10px 20px; cursor: pointer;
-      box-shadow: 3px 3px 0 var(--berry);
+      position: absolute; right: 1.6cqw; bottom: 2cqw; z-index: 10;
+      font: 900 max(9px, 1.25cqw) 'Noto Sans KR', sans-serif;
+      color: var(--cream); background: var(--berry);
+      border: max(1px, .2cqw) solid var(--ink); border-radius: 999px;
+      padding: max(3px, .6cqw) max(8px, 1.5cqw); cursor: pointer;
+      box-shadow: max(2px, .3cqw) max(2px, .3cqw) 0 var(--ink);
     }
-    .replay:hover { background: var(--strawberry); }
-    .replay:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--berry); }
+    .replay:hover { background: var(--matcha); }
+    .replay:active { transform: translate(2px, 2px); box-shadow: none; }
   </style>
 </head>
 <body>
+  <!-- 로고 그림(컵 두 잔 + 하트 + 필름)을 한 번만 그려 두고 재사용 -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <g id="cup">
+        <path d="M-40 0 L40 0 L33 108 Q0 118 -33 108 Z" fill="#9DAA78" stroke="#37402F" stroke-width="6" stroke-linejoin="round"/>
+        <ellipse cx="0" cy="0" rx="40" ry="13" fill="#FFFBF5" stroke="#37402F" stroke-width="6"/>
+        <ellipse cx="0" cy="1" rx="27" ry="7" fill="#7E8D5A"/>
+        <path d="M-9 44 L13 56 L-9 68 Z" fill="#FFFBF5" stroke="#FFFBF5" stroke-width="5" stroke-linejoin="round"/>
+      </g>
+      <g id="logo">
+        <g fill="none" stroke-linecap="round">
+          <path d="M28 190 C40 120 120 150 200 172 S 340 150 372 92" stroke="#6E7D52" stroke-width="30"/>
+          <path d="M28 190 C40 120 120 150 200 172 S 340 150 372 92" stroke="#FFFBF5" stroke-width="24" stroke-dasharray="6 7" stroke-linecap="butt"/>
+          <path d="M28 190 C40 120 120 150 200 172 S 340 150 372 92" stroke="#6E7D52" stroke-width="13"/>
+        </g>
+        <use href="#cup" transform="translate(150 70) rotate(-14)"/>
+        <use href="#cup" transform="translate(250 70) rotate(14)"/>
+        <path d="M200 40 C182 26 176 10 189 4 C197 0 200 8 200 10 C200 8 203 0 211 4 C224 10 218 26 200 40 Z" fill="#B8475F"/>
+        <g stroke="#37402F" stroke-width="5" stroke-linecap="round"><line x1="236" y1="16" x2="243" y2="2"/><line x1="244" y1="28" x2="258" y2="18"/></g>
+      </g>
+    </defs>
+  </svg>
+
   <div class="stage" id="stage">
+    <div id="dots"></div>
 
-    <!-- 장면 1 (0~2초): 사이트 제목 -->
-    <div class="scene" id="s1">
-      <div class="title" id="title"><span class="m1">Movie</span> <span class="m2">Matcha</span></div>
-    </div>
+    <!-- 티켓 카드: 모든 장면이 이 안에서 바뀌어요 -->
+    <div class="ticket" id="ticket">
+      <div class="t-head"><span>ADMIT ONE OR TWO</span><span class="heart">♥</span></div>
+      <div class="tear"></div>
+      <div class="notch l"></div><div class="notch r"></div>
+      <div class="t-body">
 
-    <!-- 장면 2 (2~8초): 핵심 특징 3가지 -->
-    <div class="scene" id="s2">
-      <div class="feature" id="f1"><div class="kicker">HOW TO BLEND</div><div class="no">01</div><div class="big"><b>혼자</b> 또는 <i>커플</i><br>취향 매칭</div></div>
-      <div class="feature" id="f2"><div class="kicker">HOW TO BLEND</div><div class="no">02</div><div class="big">둘의 취향을<br><b>블렌딩</b></div></div>
-      <div class="feature" id="f3"><div class="kicker">HOW TO BLEND</div><div class="no">03</div><div class="big">오늘 볼<br><i>인생 영화</i> 추천</div></div>
-      <div class="feature recap" id="f4">
-        <div class="line">혼자 또는 커플 취향 매칭</div>
-        <div class="line">둘의 취향을 블렌딩</div>
-        <div class="line">오늘 볼 인생 영화 추천</div>
+        <!-- 장면 1 (0~2초): 로고 쾅 -->
+        <div class="scene on-cream" id="s1">
+          <svg class="cups" viewBox="0 0 400 230" aria-hidden="true"><use href="#logo"/></svg>
+          <div class="wordmark" id="title"><span class="ln">Movie</span><span class="ln">Matcha</span></div>
+          <div class="tagline" id="tag1">YOUR TASTE <span class="plus">+</span> MY TASTE <span class="plus">=</span> OUR MOVIE</div>
+        </div>
+
+        <!-- 장면 2 (2~8초): 핵심 문구 3가지 -->
+        <div class="scene on-cream" id="s2">
+          <div class="feature" id="f1"><div class="no">01</div><div class="big en">ADMIT <b>ONE</b><br>OR <i>TWO</i></div><div class="sub">혼자 볼지, 둘이 볼지 고르고</div></div>
+          <div class="feature" id="f2"><div class="no">02</div><div class="big">달콤 쌉싸름한<br><b>취향 블렌딩</b></div><div class="sub">서로 다른 두 취향을 한 잔에</div></div>
+          <div class="feature" id="f3"><div class="no">03</div><div class="big">둘 다 만족할<br><i>인생 영화</i></div><div class="sub">오늘 함께 볼 영화를 내려드려요</div></div>
+          <div class="feature recap" id="f4">
+            <div class="line">ADMIT ONE OR TWO</div>
+            <div class="line">달콤 쌉싸름한 취향 블렌딩</div>
+            <div class="line">둘 다 만족할 인생 영화</div>
+          </div>
+        </div>
+
+        <!-- 장면 3 (8~12초): 100% MATCH 카운트업 -->
+        <div class="scene on-cream" id="s3">
+          <div class="label">영화 취향 궁합</div>
+          <div class="count-row">
+            <div class="count"><span id="num">0</span><small>%</small></div>
+            <div class="match" id="matchTag">MATCH</div>
+          </div>
+          <svg class="film" viewBox="0 0 500 34" preserveAspectRatio="none" aria-hidden="true">
+            <defs><clipPath id="fillClip"><rect id="fillRect" x="0" y="0" width="0" height="34"/></clipPath></defs>
+            <rect x="0" y="0" width="500" height="34" rx="5" fill="#F6D2DC" stroke="#37402F" stroke-width="3"/>
+            <g clip-path="url(#fillClip)">
+              <rect x="0" y="0" width="500" height="34" rx="5" fill="#6a984e"/>
+              <rect x="0" y="11" width="500" height="12" fill="#a6c857"/>
+            </g>
+            <line x1="4" y1="5.5" x2="496" y2="5.5" stroke="#FFFBF5" stroke-width="4" stroke-dasharray="7 8"/>
+            <line x1="4" y1="28.5" x2="496" y2="28.5" stroke="#FFFBF5" stroke-width="4" stroke-dasharray="7 8"/>
+          </svg>
+        </div>
+
+        <!-- 장면 4 (12~15초): 지금 바로 START + 주소 -->
+        <div class="scene on-cream" id="s4">
+          <div class="now" id="now">지금 바로</div>
+          <div class="start-btn" id="startBtn"><small>MATCHA ORDER</small><span>START</span></div>
+          <div class="url" id="url">https://nahyun2209.github.io/movie-fit/</div>
+          <div class="tagline" id="tag4">YOUR TASTE <span class="plus">+</span> MY TASTE <span class="plus">=</span> OUR MOVIE</div>
+        </div>
+
       </div>
-    </div>
-
-    <!-- 장면 3 (8~12초): 영화 취향 궁합 카운트업 -->
-    <div class="scene" id="s3">
-      <div class="label">영화 취향 궁합</div>
-      <div class="count"><span id="num">0</span><small>%</small></div>
-      <div class="bar"><span id="bar"></span></div>
-      <div class="formula"><span class="a">YOUR TASTE</span> + <span class="b">MY TASTE</span> = OUR MOVIE</div>
-      <div class="note">* 숫자는 예시 화면이에요</div>
-    </div>
-
-    <!-- 장면 4 (12~15초): 마지막 문구 + 주소 -->
-    <div class="scene" id="s4">
-      <div class="cta" id="cta">지금 바로<br><b>영화</b> <i>매칭</i>하기</div>
-      <div class="url" id="url">https://nahyun2209.github.io/movie-fit/</div>
-      <div class="brand" id="brand">Movie <span>Matcha</span></div>
     </div>
 
     <div class="flash" id="flash"></div>
     <div class="progress" id="progress"></div>
+    <button class="replay" id="replay" type="button">↻ 다시보기</button>
   </div>
 
-  <button class="replay" id="replay" type="button">↻ 다시보기</button>
-
   <script>
-    // ----- 도구: 짧게 쓰기 위한 함수들 -----
+    // ----- 도구 -----
     const $ = id => document.getElementById(id);
-    let timers = [];       // 예약해 둔 동작들 (다시보기 때 모두 취소)
-    let anims = [];        // 실행 중인 애니메이션들
-    let rafId = null;      // 숫자 카운트용
+    let timers = [], anims = [], rafId = null;
 
-    // ms초 뒤에 fn 실행
     function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
-    // 요소에 움직임 주기 (Web Animations API)
     function play(el, frames, opts) {
       const a = el.animate(frames, Object.assign({ fill: 'forwards', easing: 'ease-out' }, opts));
       anims.push(a); return a;
     }
     const show = (el, ms = 150) => play(el, [{ opacity: 0 }, { opacity: 1 }], { duration: ms });
     const hide = (el, ms = 150) => play(el, [{ opacity: 1 }, { opacity: 0 }], { duration: ms });
+    const snap = 'cubic-bezier(.2,.9,.3,1)';
 
-    // 화면 전체 흔들기
-    function shake(power, ms) {
-      const p = power;
+    // 화면 흔들기
+    function shake(p, ms) {
       play($('stage'), [
-        { transform: 'translate(0,0)' },
-        { transform: `translate(${-p}px,${p}px)` },
-        { transform: `translate(${p}px,${-p}px)` },
-        { transform: `translate(${-p}px,${-p}px)` },
-        { transform: `translate(${p}px,${p}px)` },
-        { transform: 'translate(0,0)' }
+        { transform: 'translate(0,0)' }, { transform: `translate(${-p}px,${p}px)` },
+        { transform: `translate(${p}px,${-p}px)` }, { transform: `translate(${-p}px,${-p}px)` },
+        { transform: `translate(${p}px,${p}px)` }, { transform: 'translate(0,0)' }
       ], { duration: ms, easing: 'linear', fill: 'none' });
     }
 
-    // ----- 처음 상태로 되돌리기 -----
+    // 메인 페이지처럼 핑크·초록 땡땡이를 흩뿌리고 천천히 떠다니게
+    (function makeDots() {
+      const colors = ['#E58FA5', '#a6c857', '#B8475F', '#6a984e', '#F4A9BC'];
+      for (let i = 0; i < 22; i++) {
+        const d = document.createElement('div');
+        d.className = 'dot';
+        const s = 0.5 + ((i * 37) % 10) / 10;           // 크기 (cqw)
+        d.style.width = d.style.height = s + 'cqw';
+        d.style.left = ((i * 53) % 100) + '%';
+        d.style.top = ((i * 29 + 7) % 100) + '%';
+        d.style.background = colors[i % colors.length];
+        $('dots').appendChild(d);
+        d.animate([{ transform: 'translateY(0)' }, { transform: `translateY(${i % 2 ? -1 : 1}cqw)` }],
+          { duration: 1800 + (i % 5) * 300, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+      }
+    })();
+
     function reset() {
       timers.forEach(clearTimeout); timers = [];
       anims.forEach(a => a.cancel()); anims = [];
       cancelAnimationFrame(rafId);
       $('num').textContent = '0';
-      $('bar').style.width = '0';
+      $('fillRect').setAttribute('width', '0');
     }
 
-    // ----- 15초 영상 순서표 -----
+    // ----- 15초 순서표 -----
     function start() {
       reset();
-
-      // 전체 진행 막대 (0~15초)
       play($('progress'), [{ width: '0%' }, { width: '100%' }], { duration: 15000, easing: 'linear' });
 
-      // [0~2초] 제목이 화면을 가득 채우며 쾅!
+      // [0~2초] 티켓이 화면을 가득 채우며 쾅! → 로고, 태그라인
+      play($('ticket'), [
+        { opacity: 1, transform: 'scale(2.6) rotate(-8deg)', filter: 'blur(10px)' },
+        { opacity: 1, transform: 'scale(.95) rotate(1deg)', filter: 'blur(0)', offset: .7 },
+        { opacity: 1, transform: 'scale(1) rotate(0)', filter: 'blur(0)' }
+      ], { duration: 520, easing: snap });
+      at(330, () => { play($('flash'), [{ opacity: .8 }, { opacity: 0 }], { duration: 280, fill: 'none' }); shake(16, 380); });
       show($('s1'), 1);
-      play($('title'), [
-        { transform: 'scale(4)', opacity: 0, filter: 'blur(20px)' },
-        { transform: 'scale(.92)', opacity: 1, filter: 'blur(0)', offset: .6 },
-        { transform: 'scale(1)', opacity: 1, filter: 'blur(0)' }
-      ], { duration: 550, easing: 'cubic-bezier(.2,.9,.3,1)' });
-      at(330, () => {
-        play($('flash'), [{ opacity: .85 }, { opacity: 0 }], { duration: 300, fill: 'none' });
-        shake(14, 350);
-      });
-      at(550, () => play($('title'), [{ transform: 'scale(1)' }, { transform: 'scale(1.06)' }], { duration: 1300, easing: 'linear' }));
+      play($('title'), [{ opacity: 0, transform: 'scale(1.8)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 360, delay: 380, easing: snap });
+      play($('tag1'), [{ opacity: 0, letterSpacing: '1em' }, { opacity: 1, letterSpacing: '.28em' }], { duration: 450, delay: 900 });
       at(1850, () => hide($('s1')));
 
-      // [2~8초] 특징 3가지를 1.5초씩: 확대 → 슬라이드 → 흔들림
+      // [2~8초] 문구 3가지 1.5초씩: 확대 → 슬라이드 → 흔들림
       at(2000, () => show($('s2'), 1));
-
-      // 01: 확대
       at(2000, () => {
         show($('f1'), 1);
-        play($('f1'), [{ transform: 'scale(.3)' }, { transform: 'scale(1.08)', offset: .7 }, { transform: 'scale(1)' }], { duration: 400, easing: 'cubic-bezier(.2,.9,.3,1)' });
+        play($('f1'), [{ transform: 'scale(.3)' }, { transform: 'scale(1.08)', offset: .7 }, { transform: 'scale(1)' }], { duration: 400, easing: snap });
       });
       at(3350, () => hide($('f1')));
 
-      // 02: 오른쪽에서 슬라이드
       at(3500, () => {
         show($('f2'), 1);
-        play($('f2'), [{ transform: 'translateX(110%) skewX(-12deg)' }, { transform: 'translateX(-3%) skewX(3deg)', offset: .75 }, { transform: 'translateX(0) skewX(0)' }], { duration: 420, easing: 'cubic-bezier(.2,.9,.3,1)' });
+        play($('f2'), [{ transform: 'translateX(110%) skewX(-12deg)' }, { transform: 'translateX(-3%) skewX(3deg)', offset: .75 }, { transform: 'translateX(0) skewX(0)' }], { duration: 420, easing: snap });
       });
       at(4850, () => play($('f2'), [{ transform: 'translateX(0)', opacity: 1 }, { transform: 'translateX(-110%)', opacity: 0 }], { duration: 150, easing: 'ease-in' }));
 
-      // 03: 등장하며 살짝 흔들림
       at(5000, () => {
         show($('f3'), 100);
         play($('f3'), [
           { transform: 'rotate(0) scale(1.15)' }, { transform: 'rotate(-3deg) scale(1)' },
           { transform: 'rotate(2.5deg)' }, { transform: 'rotate(-1.5deg)' },
           { transform: 'rotate(1deg)' }, { transform: 'rotate(0)' }
-        ], { duration: 550, easing: 'ease-out' });
-        shake(6, 300);
+        ], { duration: 550 });
+        shake(7, 300);
       });
       at(6350, () => hide($('f3')));
 
-      // 정리: 세 가지를 한 번에 (6.5~8초)
       at(6500, () => {
         show($('f4'), 1);
         [...$('f4').children].forEach((line, i) =>
@@ -256,34 +348,36 @@
       });
       at(7850, () => hide($('s2')));
 
-      // [8~12초] 영화 취향 궁합 0 → 100% 카운트업
+      // [8~12초] 0 → 100% MATCH, 필름 띠가 함께 채워짐
       at(8000, () => {
         show($('s3'), 200);
         const t0 = performance.now(), dur = 2600;
         (function tick(now) {
           const k = Math.min(1, (now - t0) / dur);
-          const eased = 1 - Math.pow(1 - k, 3);   // 끝에서 천천히
-          const v = Math.round(eased * 100);
+          const v = Math.round((1 - Math.pow(1 - k, 3)) * 100);
           $('num').textContent = v;
-          $('bar').style.width = v + '%';
+          $('fillRect').setAttribute('width', String(5 * v));
           if (k < 1) rafId = requestAnimationFrame(tick);
         })(t0);
       });
-      at(10650, () => {   // 100% 도달 순간 쾅
-        play($('num').parentElement, [{ transform: 'scale(1.25)' }, { transform: 'scale(1)' }], { duration: 400, easing: 'cubic-bezier(.2,.9,.3,1)', fill: 'none' });
-        play($('flash'), [{ opacity: .35 }, { opacity: 0 }], { duration: 250, fill: 'none' });
-        shake(10, 300);
+      at(10650, () => {
+        play($('matchTag'), [{ transform: 'scale(1.5) rotate(-6deg)', background: '#B8475F' }, { transform: 'scale(1) rotate(0)', background: '#37402F' }], { duration: 450, easing: snap, fill: 'none' });
+        play($('flash'), [{ opacity: .5 }, { opacity: 0 }], { duration: 250, fill: 'none' });
+        shake(12, 320);
       });
       at(11850, () => hide($('s3')));
 
-      // [12~15초] 마지막 문구와 주소가 선명하게 남음
+      // [12~15초] 지금 바로 START + 주소가 선명하게 남음
       at(12000, () => {
         show($('s4'), 1);
-        play($('cta'), [{ transform: 'scale(1.6)', opacity: 0, filter: 'blur(12px)' }, { transform: 'scale(1)', opacity: 1, filter: 'blur(0)' }], { duration: 450, easing: 'cubic-bezier(.2,.9,.3,1)' });
-        shake(8, 280);
+        play($('now'), [{ opacity: 0, transform: 'translateY(-60%)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 300 });
+        play($('startBtn'), [{ transform: 'scale(2)', opacity: 0 }, { transform: 'scale(.94)', opacity: 1, offset: .7 }, { transform: 'scale(1)', opacity: 1 }], { duration: 450, easing: snap });
       });
-      at(12500, () => play($('url'), [{ opacity: 0, transform: 'translateY(40%)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 400 }));
-      at(12800, () => play($('brand'), [{ opacity: 0 }, { opacity: 1 }], { duration: 400 }));
+      at(12300, () => shake(10, 300));
+      play($('url'), [{ opacity: 0 }, { opacity: 0 }], { duration: 12600 });
+      play($('tag4'), [{ opacity: 0 }, { opacity: 0 }], { duration: 12900 });
+      at(12600, () => play($('url'), [{ opacity: 0, transform: 'translateY(40%)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 400 }));
+      at(12900, () => play($('tag4'), [{ opacity: 0 }, { opacity: 1 }], { duration: 400 }));
     }
 
     $('replay').addEventListener('click', start);
