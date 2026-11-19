@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Movie Matcha 홍보 영상</title>
+  <!-- 한글이 깨지지 않도록 한글 폰트(Noto Sans KR)를 불러옵니다 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    /* index.html(Movie Matcha)에서 가져온 색 */
+    :root {
+      --bg: #12150f;          /* 아주 어두운 올리브 (배경) */
+      --matcha: #8FB36E;      /* 말차 초록 (밝게) */
+      --matcha-deep: #6a984e;
+      --strawberry: #E58FA5;  /* 스트로베리 핑크 */
+      --berry: #B8475F;       /* 진한 스트로베리 */
+      --cream: #FFFBF5;       /* 크림색 글자 */
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      background: #000;
+      color: var(--cream);
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* 16:9 화면: 창 크기에 맞춰 최대한 크게 */
+    .stage {
+      position: relative;
+      width: min(100vw, calc(100vh * 16 / 9));
+      aspect-ratio: 16 / 9;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(106,152,78,.18), transparent 55%),
+        radial-gradient(ellipse at 80% 75%, rgba(184,71,95,.18), transparent 55%),
+        var(--bg);
+      overflow: hidden;
+      container-type: size;   /* 아래 cqw 단위 = 화면 너비의 1% */
+    }
+
+    /* 각 장면은 화면 한가운데에 겹쳐 있고, 처음에는 숨겨져 있어요 */
+    .scene {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; opacity: 0;
+    }
+
+    /* 장면 1: 사이트 제목 */
+    .title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 17cqw; line-height: .9; letter-spacing: -.02em; white-space: nowrap;
+    }
+    .title .m1 { color: var(--matcha); }
+    .title .m2 { color: var(--strawberry); font-style: italic; }
+    .flash { position: absolute; inset: 0; background: var(--cream); opacity: 0; pointer-events: none; }
+
+    /* 장면 2: 핵심 특징 */
+    .kicker {
+      font-weight: 900; font-size: 1.6cqw; letter-spacing: .5em; color: var(--matcha);
+      margin-bottom: 2cqw;
+    }
+    .feature {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      opacity: 0;
+    }
+    .feature .no { font-family: 'Instrument Serif', serif; font-size: 5cqw; color: var(--strawberry); line-height: 1; }
+    .feature .big { font-weight: 900; font-size: 7.5cqw; line-height: 1.2; letter-spacing: -.03em; }
+    .feature .big b { color: var(--matcha); }
+    .feature .big i { color: var(--strawberry); font-style: normal; }
+    .recap { gap: 1.2cqw; }
+    .recap .line { font-weight: 900; font-size: 4.2cqw; letter-spacing: -.02em; }
+    .recap .line:nth-child(2) { color: var(--matcha); }
+    .recap .line:nth-child(3) { color: var(--strawberry); }
+
+    /* 장면 3: 카운트업 */
+    .label { font-weight: 700; font-size: 3cqw; color: var(--cream); }
+    .count {
+      font-weight: 900; font-size: 22cqw; line-height: 1; letter-spacing: -.04em;
+      color: var(--strawberry); font-variant-numeric: tabular-nums;
+    }
+    .count small { font-size: .45em; color: var(--matcha); }
+    .bar { width: 50cqw; height: 1.2cqw; border-radius: 1cqw; background: rgba(255,251,245,.12); overflow: hidden; margin-top: 1cqw; }
+    .bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--matcha), var(--strawberry)); }
+    .formula { margin-top: 2.2cqw; font-weight: 900; font-size: 1.8cqw; letter-spacing: .3em; }
+    .formula .a { color: var(--matcha); } .formula .b { color: var(--strawberry); }
+    .note { position: absolute; bottom: 3cqw; font-size: 1.1cqw; color: rgba(255,251,245,.4); }
+
+    /* 장면 4: 마지막 문구 */
+    .cta { font-weight: 900; font-size: 7.6cqw; line-height: 1.15; letter-spacing: -.03em; }
+    .cta b { color: var(--matcha); }
+    .cta i { color: var(--strawberry); font-style: normal; }
+    .url {
+      margin-top: 3cqw; font-weight: 700; font-size: 2.6cqw; color: var(--bg);
+      background: var(--cream); padding: .6cqw 2cqw; border-radius: 99cqw;
+      font-family: ui-monospace, Menlo, Consolas, 'Noto Sans KR', monospace;
+    }
+    .brand { margin-top: 2cqw; font-family: 'Instrument Serif', serif; font-size: 2.4cqw; color: var(--matcha); }
+    .brand span { color: var(--strawberry); font-style: italic; }
+
+    /* 아래쪽 진행 막대 (15초 동안 차오름) */
+    .progress { position: absolute; left: 0; bottom: 0; height: .5cqw; width: 0; background: linear-gradient(90deg, var(--matcha), var(--strawberry)); }
+
+    /* 오른쪽 아래 다시보기 버튼 */
+    .replay {
+      position: fixed; right: 20px; bottom: 20px; z-index: 10;
+      font: 700 15px 'Noto Sans KR', sans-serif;
+      color: var(--bg); background: var(--matcha);
+      border: 2px solid var(--cream); border-radius: 999px;
+      padding: 10px 20px; cursor: pointer;
+      box-shadow: 3px 3px 0 var(--berry);
+    }
+    .replay:hover { background: var(--strawberry); }
+    .replay:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--berry); }
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage">
+
+    <!-- 장면 1 (0~2초): 사이트 제목 -->
+    <div class="scene" id="s1">
+      <div class="title" id="title"><span class="m1">Movie</span> <span class="m2">Matcha</span></div>
+    </div>
+
+    <!-- 장면 2 (2~8초): 핵심 특징 3가지 -->
+    <div class="scene" id="s2">
+      <div class="feature" id="f1"><div class="kicker">HOW TO BLEND</div><div class="no">01</div><div class="big"><b>혼자</b> 또는 <i>커플</i><br>취향 매칭</div></div>
+      <div class="feature" id="f2"><div class="kicker">HOW TO BLEND</div><div class="no">02</div><div class="big">둘의 취향을<br><b>블렌딩</b></div></div>
+      <div class="feature" id="f3"><div class="kicker">HOW TO BLEND</div><div class="no">03</div><div class="big">오늘 볼<br><i>인생 영화</i> 추천</div></div>
+      <div class="feature recap" id="f4">
+        <div class="line">혼자 또는 커플 취향 매칭</div>
+        <div class="line">둘의 취향을 블렌딩</div>
+        <div class="line">오늘 볼 인생 영화 추천</div>
+      </div>
+    </div>
+
+    <!-- 장면 3 (8~12초): 영화 취향 궁합 카운트업 -->
+    <div class="scene" id="s3">
+      <div class="label">영화 취향 궁합</div>
+      <div class="count"><span id="num">0</span><small>%</small></div>
+      <div class="bar"><span id="bar"></span></div>
+      <div class="formula"><span class="a">YOUR TASTE</span> + <span class="b">MY TASTE</span> = OUR MOVIE</div>
+      <div class="note">* 숫자는 예시 화면이에요</div>
+    </div>
+
+    <!-- 장면 4 (12~15초): 마지막 문구 + 주소 -->
+    <div class="scene" id="s4">
+      <div class="cta" id="cta">지금 바로<br><b>영화</b> <i>매칭</i>하기</div>
+      <div class="url" id="url">https://nahyun2209.github.io/movie-fit/</div>
+      <div class="brand" id="brand">Movie <span>Matcha</span></div>
+    </div>
+
+    <div class="flash" id="flash"></div>
+    <div class="progress" id="progress"></div>
+  </div>
+
+  <button class="replay" id="replay" type="button">↻ 다시보기</button>
+
+  <script>
+    // ----- 도구: 짧게 쓰기 위한 함수들 -----
+    const $ = id => document.getElementById(id);
+    let timers = [];       // 예약해 둔 동작들 (다시보기 때 모두 취소)
+    let anims = [];        // 실행 중인 애니메이션들
+    let rafId = null;      // 숫자 카운트용
+
+    // ms초 뒤에 fn 실행
+    function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+    // 요소에 움직임 주기 (Web Animations API)
+    function play(el, frames, opts) {
+      const a = el.animate(frames, Object.assign({ fill: 'forwards', easing: 'ease-out' }, opts));
+      anims.push(a); return a;
+    }
+    const show = (el, ms = 150) => play(el, [{ opacity: 0 }, { opacity: 1 }], { duration: ms });
+    const hide = (el, ms = 150) => play(el, [{ opacity: 1 }, { opacity: 0 }], { duration: ms });
+
+    // 화면 전체 흔들기
+    function shake(power, ms) {
+      const p = power;
+      play($('stage'), [
+        { transform: 'translate(0,0)' },
+        { transform: `translate(${-p}px,${p}px)` },
+        { transform: `translate(${p}px,${-p}px)` },
+        { transform: `translate(${-p}px,${-p}px)` },
+        { transform: `translate(${p}px,${p}px)` },
+        { transform: 'translate(0,0)' }
+      ], { duration: ms, easing: 'linear', fill: 'none' });
+    }
+
+    // ----- 처음 상태로 되돌리기 -----
+    function reset() {
+      timers.forEach(clearTimeout); timers = [];
+      anims.forEach(a => a.cancel()); anims = [];
+      cancelAnimationFrame(rafId);
+      $('num').textContent = '0';
+      $('bar').style.width = '0';
+    }
+
+    // ----- 15초 영상 순서표 -----
+    function start() {
+      reset();
+
+      // 전체 진행 막대 (0~15초)
+      play($('progress'), [{ width: '0%' }, { width: '100%' }], { duration: 15000, easing: 'linear' });
+
+      // [0~2초] 제목이 화면을 가득 채우며 쾅!
+      show($('s1'), 1);
+      play($('title'), [
+        { transform: 'scale(4)', opacity: 0, filter: 'blur(20px)' },
+        { transform: 'scale(.92)', opacity: 1, filter: 'blur(0)', offset: .6 },
+        { transform: 'scale(1)', opacity: 1, filter: 'blur(0)' }
+      ], { duration: 550, easing: 'cubic-bezier(.2,.9,.3,1)' });
+      at(330, () => {
+        play($('flash'), [{ opacity: .85 }, { opacity: 0 }], { duration: 300, fill: 'none' });
+        shake(14, 350);
+      });
+      at(550, () => play($('title'), [{ transform: 'scale(1)' }, { transform: 'scale(1.06)' }], { duration: 1300, easing: 'linear' }));
+      at(1850, () => hide($('s1')));
+
+      // [2~8초] 특징 3가지를 1.5초씩: 확대 → 슬라이드 → 흔들림
+      at(2000, () => show($('s2'), 1));
+
+      // 01: 확대
+      at(2000, () => {
+        show($('f1'), 1);
+        play($('f1'), [{ transform: 'scale(.3)' }, { transform: 'scale(1.08)', offset: .7 }, { transform: 'scale(1)' }], { duration: 400, easing: 'cubic-bezier(.2,.9,.3,1)' });
+      });
+      at(3350, () => hide($('f1')));
+
+      // 02: 오른쪽에서 슬라이드
+      at(3500, () => {
+        show($('f2'), 1);
+        play($('f2'), [{ transform: 'translateX(110%) skewX(-12deg)' }, { transform: 'translateX(-3%) skewX(3deg)', offset: .75 }, { transform: 'translateX(0) skewX(0)' }], { duration: 420, easing: 'cubic-bezier(.2,.9,.3,1)' });
+      });
+      at(4850, () => play($('f2'), [{ transform: 'translateX(0)', opacity: 1 }, { transform: 'translateX(-110%)', opacity: 0 }], { duration: 150, easing: 'ease-in' }));
+
+      // 03: 등장하며 살짝 흔들림
+      at(5000, () => {
+        show($('f3'), 100);
+        play($('f3'), [
+          { transform: 'rotate(0) scale(1.15)' }, { transform: 'rotate(-3deg) scale(1)' },
+          { transform: 'rotate(2.5deg)' }, { transform: 'rotate(-1.5deg)' },
+          { transform: 'rotate(1deg)' }, { transform: 'rotate(0)' }
+        ], { duration: 550, easing: 'ease-out' });
+        shake(6, 300);
+      });
+      at(6350, () => hide($('f3')));
+
+      // 정리: 세 가지를 한 번에 (6.5~8초)
+      at(6500, () => {
+        show($('f4'), 1);
+        [...$('f4').children].forEach((line, i) =>
+          play(line, [{ opacity: 0, transform: 'translateY(40%)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 280, delay: i * 140 }));
+      });
+      at(7850, () => hide($('s2')));
+
+      // [8~12초] 영화 취향 궁합 0 → 100% 카운트업
+      at(8000, () => {
+        show($('s3'), 200);
+        const t0 = performance.now(), dur = 2600;
+        (function tick(now) {
+          const k = Math.min(1, (now - t0) / dur);
+          const eased = 1 - Math.pow(1 - k, 3);   // 끝에서 천천히
+          const v = Math.round(eased * 100);
+          $('num').textContent = v;
+          $('bar').style.width = v + '%';
+          if (k < 1) rafId = requestAnimationFrame(tick);
+        })(t0);
+      });
+      at(10650, () => {   // 100% 도달 순간 쾅
+        play($('num').parentElement, [{ transform: 'scale(1.25)' }, { transform: 'scale(1)' }], { duration: 400, easing: 'cubic-bezier(.2,.9,.3,1)', fill: 'none' });
+        play($('flash'), [{ opacity: .35 }, { opacity: 0 }], { duration: 250, fill: 'none' });
+        shake(10, 300);
+      });
+      at(11850, () => hide($('s3')));
+
+      // [12~15초] 마지막 문구와 주소가 선명하게 남음
+      at(12000, () => {
+        show($('s4'), 1);
+        play($('cta'), [{ transform: 'scale(1.6)', opacity: 0, filter: 'blur(12px)' }, { transform: 'scale(1)', opacity: 1, filter: 'blur(0)' }], { duration: 450, easing: 'cubic-bezier(.2,.9,.3,1)' });
+        shake(8, 280);
+      });
+      at(12500, () => play($('url'), [{ opacity: 0, transform: 'translateY(40%)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 400 }));
+      at(12800, () => play($('brand'), [{ opacity: 0 }, { opacity: 1 }], { duration: 400 }));
+    }
+
+    $('replay').addEventListener('click', start);
+
+    // 폰트가 준비되면 자동 재생 (최대 1.5초까지만 기다림)
+    let started = false;
+    const go = () => { if (!started) { started = true; start(); } };
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(go);
+    setTimeout(go, 1500);
+  </script>
+</body>
+</html>
