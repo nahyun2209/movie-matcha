@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>느좋 영화관 코스</title>
+  <title>CINE-WALK 서울 촬영지 투어</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     /* index.html(Movie Matcha)과 같은 색을 이름 붙여 모아 둔 곳 */
     :root {
@@ -15,7 +15,7 @@
       --matcha-dark: #58803f;
       --matcha-soft: #A9C78A;/* 티켓 그림자 */
       --matcha-mist: #EEF4E6;
-      --rose: #B8475F;       /* 장미색 포인트 */
+      --rose: #B8475F;       /* 스트로베리 포인트 */
       --pink: #FBE6EC;       /* 연분홍 배경 */
       --cream: #FFFBF5;      /* 티켓 종이색 */
       --muted: #6b7363;
@@ -32,13 +32,13 @@
     .wrap { max-width: 860px; margin: 0 auto; }
     .serif { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; }
 
-    /* 맨 위 홈으로 링크 */
+    /* 맨 위 HOME 링크 */
     .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .home {
       display: inline-flex; align-items: center; gap: 6px;
-      color: var(--ink); text-decoration: none; font-weight: 700; font-size: 14px;
+      color: var(--ink); text-decoration: none; font-weight: 700; font-size: 13px; letter-spacing: 2px;
       background: var(--cream); border: 1.5px solid var(--ink); border-radius: 999px;
-      padding: 6px 14px;
+      padding: 6px 16px;
     }
     .home:hover { background: var(--matcha-mist); }
     .brand { font-size: 20px; }
@@ -64,10 +64,14 @@
     /* 첫 화면 */
     .hero { text-align: center; }
     .eyebrow { font-size: 12px; letter-spacing: 3px; color: var(--matcha-dark); font-weight: 700; }
-    .hero h1 { font-size: clamp(36px, 8vw, 58px); line-height: 1.05; margin: 10px 0 8px; }
-    .hero h1 em { color: var(--rose); }
-    .hero .ko-title { font-size: 18px; font-weight: 700; }
-    .hero .lead { color: var(--muted); margin-top: 10px; }
+    .hero h1 {
+      font-family: 'Noto Sans KR', sans-serif; font-weight: 900;
+      font-size: clamp(46px, 12vw, 88px); line-height: 1; letter-spacing: -.02em; margin: 12px 0 10px;
+    }
+    .hero h1 .c { color: var(--matcha); }
+    .hero h1 .w { color: var(--rose); }
+    .hero .en { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: clamp(20px, 4vw, 26px); line-height: 1.3; }
+    .hero .lead { color: var(--muted); margin-top: 6px; }
     .blend {
       display: flex; justify-content: center; align-items: center; gap: 10px;
       margin-top: 18px; font-size: 13px; font-weight: 700; flex-wrap: wrap;
@@ -92,7 +96,7 @@
       padding: 10px 14px; font-size: 13px; color: var(--muted); margin-bottom: 28px;
     }
 
-    /* 영화관 카드: PC는 3칸, 모바일은 1칸 */
+    /* 촬영지 카드: PC는 3칸, 모바일은 1칸 */
     .places { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     .place {
       display: flex; flex-direction: column;
@@ -100,14 +104,18 @@
       background: #fff;
     }
     .place .num { font-size: 28px; color: var(--matcha); line-height: 1; }
-    .place h3 { font-size: 17px; margin: 8px 0 2px; }
-    .place .area { font-size: 12px; color: var(--matcha-dark); font-weight: 700; margin-bottom: 8px; }
+    .place h3 { font-size: 17px; margin: 8px 0 6px; line-height: 1.35; }
+    .works { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+    .work {
+      font-size: 12px; font-weight: 700; color: var(--ink);
+      background: var(--matcha-mist); border-radius: 6px; padding: 1px 8px;
+    }
     .place p.desc { font-size: 14px; color: var(--muted); flex: 1; }
-    .place .fee {
+    .place .when {
       font-size: 14px; margin: 12px 0; padding-top: 10px;
       border-top: 1px dashed #C9CEC1;
     }
-    .place .fee b { color: var(--rose); }
+    .place .when b { color: var(--rose); }
 
     /* 버튼들 */
     .btn {
@@ -123,6 +131,7 @@
     .btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
     .btn.light { background: var(--cream); color: var(--ink); }
     .btn.light:hover { background: var(--matcha-mist); }
+    .btn.big { font-size: 16px; padding: 14px 32px; letter-spacing: 1px; }
 
     /* 일정표 */
     .schedule { list-style: none; border-left: 2px dashed var(--matcha-soft); margin-left: 6px; }
@@ -142,9 +151,10 @@
     .cost tr.total td { border-bottom: none; border-top: 1.5px solid var(--ink); font-size: 17px; padding-top: 14px; }
     .cost tr.total td:last-child { color: var(--rose); }
 
-    /* 예매 안내 */
+    /* 문의 */
     .cta { text-align: center; }
     .cta-btns { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+    .msg { margin-top: 14px; font-size: 14px; color: var(--rose); min-height: 1.6em; }
 
     footer { text-align: center; font-size: 12px; color: var(--muted); }
 
@@ -160,86 +170,87 @@
 <body>
   <div class="wrap">
 
-    <!-- 맨 위: 홈으로 돌아가는 링크 -->
+    <!-- 맨 위: index.html로 돌아가는 HOME 링크 -->
     <nav class="top">
-      <a class="home" href="index.html">← 홈으로</a>
+      <a class="home" href="index.html">← HOME</a>
       <span class="brand serif">Movie Matcha</span>
     </nav>
 
-    <!-- 1. 제목과 한 줄 소개 -->
+    <!-- 1. 영어 타이틀과 한 줄 소개 -->
     <section class="ticket">
-      <div class="ticket-head"><span>ADMIT ONE OR TWO · CINEMA DATE</span><span class="heart">♥</span></div>
+      <div class="ticket-head"><span>ADMIT ONE OR TWO · WALKING TOUR</span><span class="heart">♥</span></div>
       <div class="ticket-body hero">
-        <p class="eyebrow">YOUR MOVIE + OUR PLACE = OUR DATE</p>
-        <h1 class="serif">Cozy <em>Cinema</em> Course</h1>
-        <p class="ko-title">서울 느좋 영화관 3곳 &amp; 영화 데이트 코스</p>
-        <p class="lead">내 취향 영화를 찾았다면, 이제 감성 가득한 극장으로 떠날 차례</p>
+        <p class="eyebrow">YOUR MOVIE + REAL SCENE = OUR WALK</p>
+        <h1><span class="c">CINE</span>-<span class="w">WALK</span></h1>
+        <p class="en">From your screen to the real scene</p>
+        <p class="lead">영화의 여운을 따라 걷는 서울 촬영지 투어</p>
         <div class="blend">
-          <span class="cup a">취향 영화</span> + <span class="cup b">느좋 극장</span> = <span class="cup ab">오늘의 데이트</span>
+          <span class="cup a">본 영화</span> + <span class="cup b">실제 장소</span> = <span class="cup ab">오늘의 산책</span>
         </div>
       </div>
     </section>
 
     <!-- 안내 문구 -->
     <p class="notice">
-      ※ 영화관 소개는 언론 기사를 바탕으로 정리했어요. 관람료·운영시간·좌석은 바뀔 수 있으니
-      <span class="ex">예시</span> 표시가 붙은 내용은 꼭 각 영화관 공식 채널에서 다시 확인해 주세요.
+      ※ 촬영지 정보는 서울시 미디어허브 등 기사와 관광 안내 자료를 바탕으로 정리했어요.
+      시간과 가격은 실제 정보가 아니라서 <span class="ex">예시(Example)</span> 표시를 붙였어요.
+      주택가 골목은 주민이 사는 곳이니 조용히 걸어 주세요.
     </p>
 
-    <!-- 2~3. 추천 영화관 3곳 + 지도 버튼 -->
+    <!-- 2~3. 추천 촬영지 3곳 + 지도 버튼 -->
     <section class="ticket">
-      <div class="ticket-head"><span>SCREEN 01 – 03</span><span class="heart">♥</span></div>
+      <div class="ticket-head"><span>SCENE 01 – 03</span><span class="heart">♥</span></div>
       <div class="ticket-body">
-        <h2 class="serif">Cinemas</h2>
-        <p class="sub">혼자도, 둘이서도 좋은 독립·예술 영화관</p>
+        <h2 class="serif">Scenes</h2>
+        <p class="sub">화면 속 그 장소, 실제로 걸어 보기</p>
         <div class="places">
 
           <div class="place">
             <div class="num serif">01</div>
-            <h3>라이카시네마</h3>
-            <p class="area">서대문구 연희동</p>
-            <p class="desc">좌석 수를 일부러 줄여 간격이 넓고 단차가 높아, 어디에 앉아도 시야가 편한 40석 안팎의 작은 극장. 위층에는 카페가 있어요.</p>
-            <p class="fee">관람료 <b>약 1만 원대</b> <span class="ex">예시</span></p>
-            <a class="btn" href="https://map.naver.com/p/search/라이카시네마" target="_blank" rel="noopener">지도에서 위치 보기 ↗</a>
+            <h3>세운상가 · 을지로 일대</h3>
+            <div class="works"><span class="work">영화 〈도둑들〉</span><span class="work">드라마 〈빈센조〉</span></div>
+            <p class="desc">〈도둑들〉의 추격 장면이 촬영된 곳으로 소개되고, 〈빈센조〉에서는 '금가프라자'로 나왔어요. 오래된 상가 건물과 골목이 이어지는 레트로 분위기예요.</p>
+            <p class="when">추천 시간대 <b>늦은 오후 ~ 저녁</b> <span class="ex">예시(Example)</span></p>
+            <a class="btn" href="https://map.naver.com/p/search/세운상가" target="_blank" rel="noopener">View on Map (지도 보기) ↗</a>
           </div>
 
           <div class="place">
             <div class="num serif">02</div>
-            <h3>씨네큐브 광화문</h3>
-            <p class="area">종로구 · 흥국생명빌딩 지하</p>
-            <p class="desc">2000년에 문을 연 예술영화관으로, 상영관 2개에서 예술영화 위주로 상영해요. 정시 입장이 원칙이라 차분하게 몰입하기 좋아요.</p>
-            <p class="fee">관람료 <b>약 1만 원대</b> <span class="ex">예시</span></p>
-            <a class="btn" href="https://map.naver.com/p/search/씨네큐브 광화문" target="_blank" rel="noopener">지도에서 위치 보기 ↗</a>
+            <h3>북촌 · 서촌 골목</h3>
+            <div class="works"><span class="work">영화 〈건축학개론〉</span><span class="work">드라마 〈겨울연가〉</span></div>
+            <p class="desc">서촌 누하동 일대는 〈건축학개론〉의 한옥 장면 배경으로 알려져 있고, 북촌 골목은 〈겨울연가〉 촬영지로 알려져 있어요. 한옥 사이로 걷는 첫사랑 같은 분위기예요.</p>
+            <p class="when">추천 시간대 <b>오후 (한낮)</b> <span class="ex">예시(Example)</span></p>
+            <a class="btn" href="https://map.naver.com/p/search/서촌 누하동" target="_blank" rel="noopener">View on Map (지도 보기) ↗</a>
           </div>
 
           <div class="place">
             <div class="num serif">03</div>
-            <h3>에무시네마</h3>
-            <p class="area">경희궁 뒤편 골목 · 복합문화공간 에무</p>
-            <p class="desc">상영관 하나뿐인 작은 극장. 기사에서는 스크린 앞에서 누워 볼 수 있는 빈백 좌석이 소개되기도 했어요.</p>
-            <p class="fee">관람료 <b>약 1만 원</b> <span class="ex">예시</span></p>
-            <a class="btn" href="https://map.naver.com/p/search/에무시네마" target="_blank" rel="noopener">지도에서 위치 보기 ↗</a>
+            <h3>한강 노들섬</h3>
+            <div class="works"><span class="work">드라마 〈빈센조〉</span></div>
+            <p class="desc">관광 안내 자료에서 〈빈센조〉 촬영지로 소개된 한강 위의 섬이에요. 강과 도시 불빛을 함께 볼 수 있어, 엔딩 크레딧처럼 하루를 마무리하기 좋아요.</p>
+            <p class="when">추천 시간대 <b>해 질 무렵 ~ 밤</b> <span class="ex">예시(Example)</span></p>
+            <a class="btn" href="https://map.naver.com/p/search/노들섬" target="_blank" rel="noopener">View on Map (지도 보기) ↗</a>
           </div>
 
         </div>
       </div>
     </section>
 
-    <!-- 4-1. 반나절 데이트 동선 -->
+    <!-- 4-1. 반나절 도보 일정표 -->
     <section class="ticket">
-      <div class="ticket-head"><span>HALF-DAY ROUTE</span><span class="heart">♥</span></div>
+      <div class="ticket-head"><span>HALF-DAY WALK</span><span class="heart">♥</span></div>
       <div class="ticket-body">
         <h2 class="serif">Route</h2>
-        <p class="sub">영화 전후로 즐기는 반나절 데이트 동선 <span class="ex">시간은 예시</span></p>
+        <p class="sub">반나절 도보 일정표 <span class="ex">시간은 예시(Example)</span></p>
         <ul class="schedule">
-          <li><span class="time">14:00</span>Movie Matcha에서 둘의 취향을 블렌딩해 오늘 볼 영화 고르기</li>
-          <li><span class="time">14:30</span>상영 시간표를 확인하고 위 세 곳 중 한 곳 예매하기</li>
-          <li><span class="time">15:30</span>영화관 근처 카페에서 쉬면서 기다리기</li>
-          <li><span class="time">16:30</span>영화 관람 (상영 10분 전 도착)</li>
-          <li><span class="time">18:30</span>저녁 먹으며 오늘 본 영화 이야기 나누기</li>
-          <li><span class="time">20:00</span>동네 골목 산책하며 마무리</li>
+          <li><span class="time">13:00</span>Movie Matcha에서 오늘의 영화 고르고, 촬영지 작품 미리 떠올리기</li>
+          <li><span class="time">14:00</span>서촌 골목 산책 → 북촌 한옥 골목 걷기</li>
+          <li><span class="time">16:00</span>대중교통으로 을지로 이동, 카페에서 잠깐 쉬기</li>
+          <li><span class="time">17:00</span>세운상가 · 을지로 골목 걷기</li>
+          <li><span class="time">18:30</span>을지로에서 저녁 식사</li>
+          <li><span class="time">19:30</span>대중교통으로 노들섬 이동, 한강 야경 보며 마무리</li>
         </ul>
-        <p class="tip">Tip. 씨네큐브 광화문과 에무시네마는 둘 다 광화문·경희궁 쪽이라, 하루에 두 곳을 함께 둘러보는 코스도 짜 볼 수 있어요.</p>
+        <p class="tip">Tip. 각 동네 안에서는 걸어서, 동네와 동네 사이는 지하철·버스로 이동하는 코스예요. 실제 이동 시간은 지도 앱에서 확인해 주세요.</p>
       </div>
     </section>
 
@@ -248,32 +259,40 @@
       <div class="ticket-head"><span>PRICE · FOR TWO</span><span class="heart">♥</span></div>
       <div class="ticket-body">
         <h2 class="serif">Price</h2>
-        <p class="sub">2인 기준 예상 비용 <span class="ex">가격은 예시</span></p>
+        <p class="sub">2인 기준 예상 비용 <span class="ex">가격은 예시(Example)</span></p>
         <table class="cost">
-          <tr><td>영화 관람 (2인)</td><td>약 20,000~30,000원</td></tr>
+          <tr><td>대중교통 (2인, 몇 구간)</td><td>약 10,000원</td></tr>
           <tr><td>카페 (2인)</td><td>약 15,000원</td></tr>
           <tr><td>저녁 식사 (2인)</td><td>약 40,000원</td></tr>
-          <tr class="total"><td>합계 <span class="ex">예시</span></td><td>약 75,000~85,000원</td></tr>
+          <tr class="total"><td>합계 <span class="ex">예시(Example)</span></td><td>약 65,000원</td></tr>
         </table>
-        <p class="tip">혼자 간다면 대략 절반 정도로 생각하면 돼요.</p>
+        <p class="tip">혼자 걷는다면 대략 절반 정도로 생각하면 돼요.</p>
       </div>
     </section>
 
-    <!-- 4-3. 예매·문의 안내 -->
+    <!-- 4-3. 투어 문의 -->
     <section class="ticket">
-      <div class="ticket-head"><span>BOOKING &amp; CONTACT</span><span class="heart">♥</span></div>
+      <div class="ticket-head"><span>CONTACT</span><span class="heart">♥</span></div>
       <div class="ticket-body cta">
-        <h2 class="serif">Booking</h2>
-        <p class="sub">예매와 문의는 각 영화관 공식 채널에서 해 주세요.<br>버튼을 누르면 네이버에서 예매 정보를 찾아 줘요.</p>
+        <h2 class="serif">Ask us</h2>
+        <p class="sub">투어가 궁금하다면 문의해 주세요.</p>
         <div class="cta-btns">
-          <a class="btn light" href="https://search.naver.com/search.naver?query=라이카시네마 예매" target="_blank" rel="noopener">라이카시네마 예매 정보 ↗</a>
-          <a class="btn light" href="https://search.naver.com/search.naver?query=씨네큐브 광화문 예매" target="_blank" rel="noopener">씨네큐브 예매 정보 ↗</a>
-          <a class="btn light" href="https://search.naver.com/search.naver?query=에무시네마 예매" target="_blank" rel="noopener">에무시네마 예매 정보 ↗</a>
+          <button class="btn big" type="button" id="ask">투어 문의하기</button>
+          <a class="btn light big" href="index.html">오늘 볼 영화 먼저 고르기</a>
         </div>
+        <p class="msg" id="msg" aria-live="polite"></p>
       </div>
     </section>
 
-    <footer>Movie Matcha · 영화관 정보는 바뀔 수 있으니 방문 전 꼭 확인하세요.</footer>
+    <footer>CINE-WALK by Movie Matcha · 촬영지와 운영 정보는 바뀔 수 있으니 방문 전 꼭 확인하세요.</footer>
   </div>
+
+  <script>
+    // 아직 실제 문의 창구가 없어서, 버튼을 누르면 안내 문구만 보여 줍니다.
+    document.getElementById('ask').addEventListener('click', function () {
+      document.getElementById('msg').textContent =
+        '아직 문의 창구가 준비 중이에요. 연락처가 생기면 이 버튼에 연결해 주세요.';
+    });
+  </script>
 </body>
 </html>
