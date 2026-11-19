@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Matcha Trip 1박 2일</title>
+  <title>느좋 영화관 코스</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -29,7 +29,7 @@
       line-height: 1.6;
       padding: 16px 16px 48px;
     }
-    .wrap { max-width: 760px; margin: 0 auto; }
+    .wrap { max-width: 860px; margin: 0 auto; }
     .serif { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; }
 
     /* 맨 위 홈으로 링크 */
@@ -64,7 +64,7 @@
     /* 첫 화면 */
     .hero { text-align: center; }
     .eyebrow { font-size: 12px; letter-spacing: 3px; color: var(--matcha-dark); font-weight: 700; }
-    .hero h1 { font-size: clamp(38px, 9vw, 60px); line-height: 1.05; margin: 10px 0 6px; }
+    .hero h1 { font-size: clamp(36px, 8vw, 58px); line-height: 1.05; margin: 10px 0 8px; }
     .hero h1 em { color: var(--rose); }
     .hero .ko-title { font-size: 18px; font-weight: 700; }
     .hero .lead { color: var(--muted); margin-top: 10px; }
@@ -85,31 +85,46 @@
       display: inline-block; font-size: 11px; font-weight: 700;
       color: var(--rose); background: var(--pink);
       border: 1px solid var(--rose); border-radius: 6px;
-      padding: 0 6px; margin-left: 4px; vertical-align: middle;
+      padding: 0 6px; margin-left: 4px; vertical-align: middle; white-space: nowrap;
     }
     .notice {
       background: var(--matcha-mist); border-radius: 10px;
-      padding: 10px 14px; font-size: 13px; color: var(--muted); margin-bottom: 18px;
+      padding: 10px 14px; font-size: 13px; color: var(--muted); margin-bottom: 28px;
     }
 
-    /* 추천 장소: PC는 3칸, 모바일은 1칸 */
+    /* 영화관 카드: PC는 3칸, 모바일은 1칸 */
     .places { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     .place {
+      display: flex; flex-direction: column;
       border: 1.5px solid var(--ink); border-radius: 12px; padding: 16px;
       background: #fff;
     }
     .place .num { font-size: 28px; color: var(--matcha); line-height: 1; }
-    .place h3 { font-size: 16px; margin: 8px 0 4px; }
-    .place p { font-size: 14px; color: var(--muted); }
+    .place h3 { font-size: 17px; margin: 8px 0 2px; }
+    .place .area { font-size: 12px; color: var(--matcha-dark); font-weight: 700; margin-bottom: 8px; }
+    .place p.desc { font-size: 14px; color: var(--muted); flex: 1; }
+    .place .fee {
+      font-size: 14px; margin: 12px 0; padding-top: 10px;
+      border-top: 1px dashed #C9CEC1;
+    }
+    .place .fee b { color: var(--rose); }
+
+    /* 버튼들 */
+    .btn {
+      display: inline-block; text-align: center; text-decoration: none; cursor: pointer;
+      font: inherit; font-weight: 700; font-size: 14px;
+      color: #fff; background: var(--matcha);
+      border: 1.5px solid var(--ink); border-radius: 999px;
+      padding: 10px 16px;
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: transform .1s, box-shadow .1s;
+    }
+    .btn:hover { background: var(--matcha-dark); }
+    .btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+    .btn.light { background: var(--cream); color: var(--ink); }
+    .btn.light:hover { background: var(--matcha-mist); }
 
     /* 일정표 */
-    .day { margin-bottom: 18px; }
-    .day:last-child { margin-bottom: 0; }
-    .day-label {
-      display: inline-block; background: var(--ink); color: var(--cream);
-      font-size: 12px; font-weight: 700; letter-spacing: 1px;
-      padding: 3px 10px; border-radius: 6px; margin-bottom: 8px;
-    }
     .schedule { list-style: none; border-left: 2px dashed var(--matcha-soft); margin-left: 6px; }
     .schedule li { position: relative; padding: 6px 0 6px 18px; font-size: 15px; }
     .schedule li::before {
@@ -118,36 +133,27 @@
       background: var(--cream); border: 2px solid var(--matcha);
     }
     .time { font-weight: 700; color: var(--matcha-dark); margin-right: 8px; white-space: nowrap; }
+    .tip { margin-top: 14px; font-size: 13px; color: var(--muted); }
 
     /* 비용 */
     .cost { width: 100%; border-collapse: collapse; font-size: 15px; }
     .cost td { padding: 10px 0; border-bottom: 1px dashed #C9CEC1; }
-    .cost td:last-child { text-align: right; font-weight: 700; white-space: nowrap; }
+    .cost td:last-child { text-align: right; font-weight: 700; white-space: nowrap; padding-left: 12px; }
     .cost tr.total td { border-bottom: none; border-top: 1.5px solid var(--ink); font-size: 17px; padding-top: 14px; }
     .cost tr.total td:last-child { color: var(--rose); }
 
-    /* 문의 버튼 */
+    /* 예매 안내 */
     .cta { text-align: center; }
-    .btn {
-      display: inline-block; cursor: pointer;
-      font: inherit; font-weight: 700; font-size: 16px; letter-spacing: 1px;
-      color: #fff; background: var(--matcha);
-      border: 1.5px solid var(--ink); border-radius: 999px;
-      padding: 14px 36px;
-      box-shadow: 4px 4px 0 var(--ink);
-      transition: transform .1s, box-shadow .1s;
-    }
-    .btn:hover { background: var(--matcha-dark); }
-    .btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
-    .msg { margin-top: 14px; font-size: 14px; color: var(--rose); min-height: 1.6em; }
+    .cta-btns { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
 
     footer { text-align: center; font-size: 12px; color: var(--muted); }
 
     /* 화면이 좁을 때(휴대폰) */
-    @media (max-width: 640px) {
+    @media (max-width: 720px) {
       .places { grid-template-columns: 1fr; }
       .ticket { box-shadow: 6px 6px 0 var(--matcha-soft); }
       h2 { font-size: 26px; }
+      .cta-btns .btn { width: 100%; }
     }
   </style>
 </head>
@@ -160,118 +166,114 @@
       <span class="brand serif">Movie Matcha</span>
     </nav>
 
-    <!-- 제목과 한 줄 소개 -->
+    <!-- 1. 제목과 한 줄 소개 -->
     <section class="ticket">
-      <div class="ticket-head"><span>ADMIT TWO · 1 NIGHT 2 DAYS</span><span class="heart">♥</span></div>
+      <div class="ticket-head"><span>ADMIT ONE OR TWO · CINEMA DATE</span><span class="heart">♥</span></div>
       <div class="ticket-body hero">
-        <p class="eyebrow">YOUR TASTE + MY TASTE = OUR TRIP</p>
-        <h1 class="serif">Matcha <em>Trip</em></h1>
-        <p class="ko-title">취향 블렌딩 1박 2일 커플 여행</p>
-        <p class="lead">서로 다른 두 취향을 한 잔에 섞듯, 둘 다 즐거운 여행 코스를 만들어 드려요.</p>
+        <p class="eyebrow">YOUR MOVIE + OUR PLACE = OUR DATE</p>
+        <h1 class="serif">Cozy <em>Cinema</em> Course</h1>
+        <p class="ko-title">서울 느좋 영화관 3곳 &amp; 영화 데이트 코스</p>
+        <p class="lead">내 취향 영화를 찾았다면, 이제 감성 가득한 극장으로 떠날 차례</p>
         <div class="blend">
-          <span class="cup a">내 취향</span> + <span class="cup b">너의 취향</span> = <span class="cup ab">우리 여행</span>
+          <span class="cup a">취향 영화</span> + <span class="cup b">느좋 극장</span> = <span class="cup ab">오늘의 데이트</span>
         </div>
       </div>
     </section>
 
     <!-- 안내 문구 -->
     <p class="notice">
-      ※ 이 페이지는 <b>가상의 여행 상품 예시</b>입니다. 장소, 시간, 가격은 실제 정보가 아니며
-      <span class="ex">예시</span> 표시가 붙어 있어요.
+      ※ 영화관 소개는 언론 기사를 바탕으로 정리했어요. 관람료·운영시간·좌석은 바뀔 수 있으니
+      <span class="ex">예시</span> 표시가 붙은 내용은 꼭 각 영화관 공식 채널에서 다시 확인해 주세요.
     </p>
 
-    <!-- 추천 장소 3곳 -->
+    <!-- 2~3. 추천 영화관 3곳 + 지도 버튼 -->
     <section class="ticket">
-      <div class="ticket-head"><span>STOP 01 – 03</span><span class="heart">♥</span></div>
+      <div class="ticket-head"><span>SCREEN 01 – 03</span><span class="heart">♥</span></div>
       <div class="ticket-body">
-        <h2 class="serif">Places</h2>
-        <p class="sub">추천 장소 3곳 <span class="ex">예시 장소</span></p>
+        <h2 class="serif">Cinemas</h2>
+        <p class="sub">혼자도, 둘이서도 좋은 독립·예술 영화관</p>
         <div class="places">
+
           <div class="place">
             <div class="num serif">01</div>
-            <h3>블렌딩 카페</h3>
-            <p>각자 좋아하는 맛을 골라 둘만의 음료를 함께 만들어 보는 카페.</p>
+            <h3>라이카시네마</h3>
+            <p class="area">서대문구 연희동</p>
+            <p class="desc">좌석 수를 일부러 줄여 간격이 넓고 단차가 높아, 어디에 앉아도 시야가 편한 40석 안팎의 작은 극장. 위층에는 카페가 있어요.</p>
+            <p class="fee">관람료 <b>약 1만 원대</b> <span class="ex">예시</span></p>
+            <a class="btn" href="https://map.naver.com/p/search/라이카시네마" target="_blank" rel="noopener">지도에서 위치 보기 ↗</a>
           </div>
+
           <div class="place">
             <div class="num serif">02</div>
-            <h3>작은 영화관</h3>
-            <p>Movie Matcha로 고른 영화를 둘이서 오붓하게 보는 소규모 상영관.</p>
+            <h3>씨네큐브 광화문</h3>
+            <p class="area">종로구 · 흥국생명빌딩 지하</p>
+            <p class="desc">2000년에 문을 연 예술영화관으로, 상영관 2개에서 예술영화 위주로 상영해요. 정시 입장이 원칙이라 차분하게 몰입하기 좋아요.</p>
+            <p class="fee">관람료 <b>약 1만 원대</b> <span class="ex">예시</span></p>
+            <a class="btn" href="https://map.naver.com/p/search/씨네큐브 광화문" target="_blank" rel="noopener">지도에서 위치 보기 ↗</a>
           </div>
+
           <div class="place">
             <div class="num serif">03</div>
-            <h3>노을 산책길</h3>
-            <p>해 질 무렵 걸으며 오늘 본 영화 이야기를 나누는 산책 코스.</p>
+            <h3>에무시네마</h3>
+            <p class="area">경희궁 뒤편 골목 · 복합문화공간 에무</p>
+            <p class="desc">상영관 하나뿐인 작은 극장. 기사에서는 스크린 앞에서 누워 볼 수 있는 빈백 좌석이 소개되기도 했어요.</p>
+            <p class="fee">관람료 <b>약 1만 원</b> <span class="ex">예시</span></p>
+            <a class="btn" href="https://map.naver.com/p/search/에무시네마" target="_blank" rel="noopener">지도에서 위치 보기 ↗</a>
           </div>
+
         </div>
       </div>
     </section>
 
-    <!-- 1박 2일 일정표 -->
+    <!-- 4-1. 반나절 데이트 동선 -->
     <section class="ticket">
-      <div class="ticket-head"><span>SCHEDULE</span><span class="heart">♥</span></div>
+      <div class="ticket-head"><span>HALF-DAY ROUTE</span><span class="heart">♥</span></div>
       <div class="ticket-body">
-        <h2 class="serif">Itinerary</h2>
-        <p class="sub">1박 2일 일정표 <span class="ex">시간은 예시</span></p>
-
-        <div class="day">
-          <span class="day-label">DAY 1</span>
-          <ul class="schedule">
-            <li><span class="time">13:00</span>만나서 출발, 서로의 취향 질문 카드 나누기</li>
-            <li><span class="time">15:00</span>블렌딩 카페에서 둘만의 음료 만들기</li>
-            <li><span class="time">18:00</span>저녁 식사</li>
-            <li><span class="time">20:00</span>작은 영화관에서 함께 고른 영화 보기</li>
-            <li><span class="time">22:30</span>숙소 체크인, 휴식</li>
-          </ul>
-        </div>
-
-        <div class="day">
-          <span class="day-label">DAY 2</span>
-          <ul class="schedule">
-            <li><span class="time">09:30</span>여유로운 아침 식사</li>
-            <li><span class="time">11:00</span>숙소 체크아웃</li>
-            <li><span class="time">12:00</span>점심 식사</li>
-            <li><span class="time">16:30</span>노을 산책길 걷기, 여행 마무리</li>
-          </ul>
-        </div>
+        <h2 class="serif">Route</h2>
+        <p class="sub">영화 전후로 즐기는 반나절 데이트 동선 <span class="ex">시간은 예시</span></p>
+        <ul class="schedule">
+          <li><span class="time">14:00</span>Movie Matcha에서 둘의 취향을 블렌딩해 오늘 볼 영화 고르기</li>
+          <li><span class="time">14:30</span>상영 시간표를 확인하고 위 세 곳 중 한 곳 예매하기</li>
+          <li><span class="time">15:30</span>영화관 근처 카페에서 쉬면서 기다리기</li>
+          <li><span class="time">16:30</span>영화 관람 (상영 10분 전 도착)</li>
+          <li><span class="time">18:30</span>저녁 먹으며 오늘 본 영화 이야기 나누기</li>
+          <li><span class="time">20:00</span>동네 골목 산책하며 마무리</li>
+        </ul>
+        <p class="tip">Tip. 씨네큐브 광화문과 에무시네마는 둘 다 광화문·경희궁 쪽이라, 하루에 두 곳을 함께 둘러보는 코스도 짜 볼 수 있어요.</p>
       </div>
     </section>
 
-    <!-- 예상 비용 -->
+    <!-- 4-2. 예상 비용 -->
     <section class="ticket">
       <div class="ticket-head"><span>PRICE · FOR TWO</span><span class="heart">♥</span></div>
       <div class="ticket-body">
         <h2 class="serif">Price</h2>
         <p class="sub">2인 기준 예상 비용 <span class="ex">가격은 예시</span></p>
         <table class="cost">
-          <tr><td>숙소 1박</td><td>120,000원</td></tr>
-          <tr><td>블렌딩 카페 체험</td><td>30,000원</td></tr>
-          <tr><td>영화 관람 (2인)</td><td>30,000원</td></tr>
-          <tr><td>식사 (3끼, 2인)</td><td>90,000원</td></tr>
-          <tr class="total"><td>합계 <span class="ex">예시</span></td><td>270,000원</td></tr>
+          <tr><td>영화 관람 (2인)</td><td>약 20,000~30,000원</td></tr>
+          <tr><td>카페 (2인)</td><td>약 15,000원</td></tr>
+          <tr><td>저녁 식사 (2인)</td><td>약 40,000원</td></tr>
+          <tr class="total"><td>합계 <span class="ex">예시</span></td><td>약 75,000~85,000원</td></tr>
         </table>
+        <p class="tip">혼자 간다면 대략 절반 정도로 생각하면 돼요.</p>
       </div>
     </section>
 
-    <!-- 문의 버튼 -->
+    <!-- 4-3. 예매·문의 안내 -->
     <section class="ticket">
-      <div class="ticket-head"><span>CONTACT</span><span class="heart">♥</span></div>
+      <div class="ticket-head"><span>BOOKING &amp; CONTACT</span><span class="heart">♥</span></div>
       <div class="ticket-body cta">
-        <h2 class="serif">Ask us</h2>
-        <p class="sub">궁금한 점이 있으면 문의해 주세요.</p>
-        <button class="btn" type="button" id="ask">문의하기</button>
-        <p class="msg" id="msg" aria-live="polite"></p>
+        <h2 class="serif">Booking</h2>
+        <p class="sub">예매와 문의는 각 영화관 공식 채널에서 해 주세요.<br>버튼을 누르면 네이버에서 예매 정보를 찾아 줘요.</p>
+        <div class="cta-btns">
+          <a class="btn light" href="https://search.naver.com/search.naver?query=라이카시네마 예매" target="_blank" rel="noopener">라이카시네마 예매 정보 ↗</a>
+          <a class="btn light" href="https://search.naver.com/search.naver?query=씨네큐브 광화문 예매" target="_blank" rel="noopener">씨네큐브 예매 정보 ↗</a>
+          <a class="btn light" href="https://search.naver.com/search.naver?query=에무시네마 예매" target="_blank" rel="noopener">에무시네마 예매 정보 ↗</a>
+        </div>
       </div>
     </section>
 
-    <footer>Matcha Trip은 Movie Matcha의 가상 여행 상품 예시입니다.</footer>
+    <footer>Movie Matcha · 영화관 정보는 바뀔 수 있으니 방문 전 꼭 확인하세요.</footer>
   </div>
-
-  <script>
-    // 예시 페이지라 실제 문의 창구가 없으므로, 버튼을 누르면 안내 문구만 보여 줍니다.
-    document.getElementById('ask').addEventListener('click', function () {
-      document.getElementById('msg').textContent =
-        '이 상품은 예시라서 실제 문의는 받지 않아요. 실제 연락처가 생기면 이 버튼에 연결해 주세요.';
-    });
-  </script>
 </body>
 </html>
